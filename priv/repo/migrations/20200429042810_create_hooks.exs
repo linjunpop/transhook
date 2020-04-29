@@ -6,7 +6,7 @@ defmodule Transhook.Repo.Migrations.CreateHooks do
       add :id, :binary_id, primary_key: true
 
       add :endpoint, :string, null: false
-      add :trans_template, :text, null: false
+      add :name, :string, null: false
       add :dispatcher, :map
       add :responder, :map
 

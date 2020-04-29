@@ -5,9 +5,9 @@ defmodule Transhook.Webhook.Hook do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "hooks" do
-    field :endpoint, :string, autogenerate: {Transhook.Webhook.EndpointGenerator, :generate, []}
+    field :name, :string
 
-    field :trans_template, :string
+    field :endpoint, :string, autogenerate: {Transhook.Webhook.EndpointGenerator, :generate, []}
 
     embeds_one :dispatcher, Transhook.Webhook.Dispatcher, on_replace: :update
     embeds_one :responder, Transhook.Webhook.Responder, on_replace: :update
@@ -18,8 +18,8 @@ defmodule Transhook.Webhook.Hook do
   @doc false
   def changeset(hook, attrs) do
     hook
-    |> cast(attrs, [:trans_template])
-    |> validate_required([:trans_template])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
     |> cast_embed(:dispatcher)
     |> cast_embed(:responder)
   end

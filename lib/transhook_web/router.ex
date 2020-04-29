@@ -21,7 +21,7 @@ defmodule TranshookWeb.Router do
     resources "/hooks", HookController
   end
 
-  scope "/api", TranshookWeb.API do
+  scope "/api", TranshookWeb.API, as: :api do
     pipe_through :api
 
     match(:*, "/hooks/:endpoint_id", HookController, :handle_hook)

@@ -3,8 +3,8 @@
 <table>
   <thead>
     <tr>
+      <th>Name</th>
       <th>Endpoint</th>
-      <th>Trans template</th>
       <th>Dispatcher</th>
       <th>Responder</th>
 
@@ -14,8 +14,8 @@
   <tbody>
 <%= for hook <- @hooks do %>
     <tr>
-      <td><%= hook.endpoint %></td>
-      <td><%= hook.trans_template %></td>
+      <td><%= hook.name %></td>
+      <td><%= Routes.api_hook_url(@conn, :handle_hook, hook.endpoint) %></td>
 
       <td>
         <span><%= link "Show", to: Routes.hook_path(@conn, :show, hook) %></span>

@@ -5,9 +5,9 @@
     </div>
   <% end %>
 
-  <%= label f, :trans_template %>
-  <%= textarea f, :trans_template %>
-  <%= error_tag f, :trans_template %>
+  <%= label f, :name %>
+  <%= text_input f, :name %>
+  <%= error_tag f, :name %>
 
   <fieldset>
     <legend>Responder</legend>
