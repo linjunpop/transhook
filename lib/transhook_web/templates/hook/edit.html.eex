@@ -1,0 +1,5 @@
+<h1>Edit Hook</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.hook_path(@conn, :update, @hook)) %>
+
+<span><%= link "Back", to: Routes.hook_path(@conn, :index) %></span>
