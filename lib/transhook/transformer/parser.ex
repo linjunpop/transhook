@@ -1,6 +1,6 @@
-defmodule Transhook.Parser do
+defmodule Transhook.Transformer.Parser do
   def parse(template, json_params) when is_binary(template) and is_binary(json_params) do
-    expression_pattern = ~r/{(?<json_path>.*)}/m
+    expression_pattern = ~r/{(?<json_path>.*)}/mU
 
     Regex.scan(expression_pattern, template, capture: :all)
     |> IO.inspect()
@@ -27,18 +27,29 @@ defmodule Transhook.Parser do
   defp extract_value(value, json_params) do
     json_path = Jaxon.Path.parse!(value)
 
+    IO.inspect("#{value}")
+
     result =
       json_params
       |> List.wrap()
       |> Jaxon.Stream.query(json_path)
       |> Enum.to_list()
+      |> List.flatten()
+
+    IO.inspect(result)
 
     case result do
       [] ->
         ""
 
-      [v | _] ->
+      [nil] ->
+        ""
+
+      [v | _] when is_binary(v) ->
         v
+
+      [v | _] when is_integer(v) ->
+        Integer.to_string(v)
     end
   end
 end

@@ -21,10 +21,11 @@ defmodule TranshookWeb.Router do
     resources "/hooks", HookController
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", TranshookWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", TranshookWeb.API do
+    pipe_through :api
+
+    match(:*, "/hooks/:endpoint_id", HookController, :handle_hook)
+  end
 
   # Enables LiveDashboard only for development
   #

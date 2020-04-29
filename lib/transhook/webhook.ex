@@ -37,6 +37,14 @@ defmodule Transhook.Webhook do
   """
   def get_hook!(id), do: Repo.get!(Hook, id)
 
+  def get_hook_by_endpoint_id(endpoint_id) do
+    query =
+      from h in Hook,
+        where: h.endpoint == ^endpoint_id
+
+    Repo.one(query)
+  end
+
   @doc """
   Creates a hook.
 

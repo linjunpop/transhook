@@ -6,22 +6,6 @@
     <strong>Endpoint:</strong>
     <%= @hook.endpoint %>
   </li>
-
-  <li>
-    <strong>Trans template:</strong>
-    <%= @hook.trans_template %>
-  </li>
-
-  <li>
-    <strong>Dispatcher:</strong>
-    <%= @hook.dispatcher %>
-  </li>
-
-  <li>
-    <strong>Responder:</strong>
-    <%= @hook.responder %>
-  </li>
-
 </ul>
 
 <span><%= link "Edit", to: Routes.hook_path(@conn, :edit, @hook) %></span>

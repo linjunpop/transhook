@@ -29,13 +29,22 @@
   <fieldset>
     <legend>Dispatcher</legend>
     <%= for dispatcher_form <- inputs_for(f, :dispatcher) do %>
+      <%= label dispatcher_form, :url %>
+      <%= text_input dispatcher_form, :url, placeholder: "https://example.test" %>
+      <%= error_tag dispatcher_form, :url %>
+
       <%= label dispatcher_form, :http_method %>
       <%= text_input dispatcher_form, :http_method %>
       <%= error_tag dispatcher_form, :http_method %>
 
-      <%= label dispatcher_form, :url %>
-      <%= text_input dispatcher_form, :url, placeholder: "https://example.test" %>
-      <%= error_tag dispatcher_form, :url %>
+      <%= label dispatcher_form, :content_type %>
+      <%= text_input dispatcher_form, :content_type %>
+      <%= error_tag dispatcher_form, :content_type %>
+
+      <%= label dispatcher_form, :payload_template %>
+      <p>Syntax: JSONPath</p>
+      <%= textarea dispatcher_form, :payload_template %>
+      <%= error_tag dispatcher_form, :payload_template %>
     <% end %>
   <fieldset>
 

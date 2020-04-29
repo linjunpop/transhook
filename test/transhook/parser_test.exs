@@ -50,7 +50,7 @@ defmodule Transhook.ParserTest do
     Project: {$.project.name}
     """
 
-    result = Transhook.Parser.parse(template, json_params)
+    result = Transhook.Transformer.Parser.parse(template, json_params)
 
     assert result == ~s"""
            Ref: refs/tags/v1.0.0

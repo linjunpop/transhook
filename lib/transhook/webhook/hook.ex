@@ -9,8 +9,8 @@ defmodule Transhook.Webhook.Hook do
 
     field :trans_template, :string
 
-    embeds_one :dispatcher, Transhook.Webhook.Dispatcher
-    embeds_one :responder, Transhook.Webhook.Responder
+    embeds_one :dispatcher, Transhook.Webhook.Dispatcher, on_replace: :update
+    embeds_one :responder, Transhook.Webhook.Responder, on_replace: :update
 
     timestamps()
   end
