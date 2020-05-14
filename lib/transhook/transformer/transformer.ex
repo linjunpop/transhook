@@ -9,9 +9,10 @@ defmodule Transhook.Transformer do
 
     IO.inspect(params)
 
-    payload =
-      Parser.parse(dispatcher.payload_template, params)
-      |> IO.inspect()
+    payload = Parser.parse(dispatcher.payload_template, params)
+
+    IO.puts("=> Going to send payload to #{dispatcher.url}")
+    IO.inspect(payload)
 
     request(dispatcher.http_method, dispatcher.url, dispatcher.content_type, payload)
     |> IO.inspect()

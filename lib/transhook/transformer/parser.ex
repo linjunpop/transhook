@@ -20,6 +20,11 @@ defmodule Transhook.Transformer.Parser do
 
     template_params
     |> Enum.reduce(template, fn {pattern, value}, acc ->
+      value =
+        value
+        |> String.replace("\n", "\\n")
+        |> String.replace("\r", "\\r")
+
       String.replace(acc, pattern, value)
     end)
   end
@@ -27,16 +32,12 @@ defmodule Transhook.Transformer.Parser do
   defp extract_value(value, json_params) do
     json_path = Jaxon.Path.parse!(value)
 
-    IO.inspect("#{value}")
-
     result =
       json_params
       |> List.wrap()
       |> Jaxon.Stream.query(json_path)
       |> Enum.to_list()
       |> List.flatten()
-
-    IO.inspect(result)
 
     case result do
       [] ->
