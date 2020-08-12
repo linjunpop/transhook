@@ -1,5 +1,6 @@
 defmodule TranshookWeb.API.HookController do
   use TranshookWeb, :controller
+  require Logger
 
   alias Transhook.Webhook
   alias Transhook.Webhook.Hook
@@ -13,6 +14,11 @@ defmodule TranshookWeb.API.HookController do
 
       hook ->
         json = Jason.encode!(params)
+
+        Logger.info("Endpoint ID: #{endpoint_id}")
+        Logger.info("Hook ID: #{hook.id}")
+        Logger.info("Data: #{inspect(json)}")
+
         Transformer.transform(hook, json)
 
         responder = hook.responder

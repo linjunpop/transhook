@@ -1,4 +1,6 @@
 defmodule Transhook.Transformer do
+  require Logger
+
   alias Transhook.Transformer.Parser
 
   alias Transhook.Webhook.Hook
@@ -7,15 +9,14 @@ defmodule Transhook.Transformer do
   def transform(%Hook{} = hook, params) when is_struct(hook) and is_binary(params) do
     dispatcher = hook.dispatcher
 
-    IO.inspect(params)
+    Logger.info(params)
 
     payload = Parser.parse(dispatcher.payload_template, params)
 
-    IO.puts("=> Going to send payload to #{dispatcher.url}")
-    IO.inspect(payload)
+    Logger.info("=> Going to send payload to #{dispatcher.url}")
+    Logger.info(payload)
 
     request(dispatcher.http_method, dispatcher.url, dispatcher.content_type, payload)
-    |> IO.inspect()
   end
 
   def request(http_method, url, content_type, playload) do

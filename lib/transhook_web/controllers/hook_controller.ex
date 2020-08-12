@@ -5,9 +5,7 @@ defmodule TranshookWeb.HookController do
   alias Transhook.Webhook.Hook
 
   def index(conn, _params) do
-    hooks =
-      Webhook.list_hooks()
-      |> IO.inspect()
+    hooks = Webhook.list_hooks()
 
     render(conn, "index.html", hooks: hooks)
   end

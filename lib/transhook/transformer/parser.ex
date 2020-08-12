@@ -3,7 +3,6 @@ defmodule Transhook.Transformer.Parser do
     expression_pattern = ~r/{(?<json_path>.*)}/mU
 
     Regex.scan(expression_pattern, template, capture: :all)
-    |> IO.inspect()
     |> extract_captures(template, json_params)
   end
 
