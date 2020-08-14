@@ -13,6 +13,7 @@ defmodule TranshookWeb.API.HookController do
         |> resp(404, "Not found")
 
       hook ->
+        Logger.info("Params: #{inspect(params)}")
         json = Jason.encode!(params)
 
         Logger.info("Endpoint ID: #{endpoint_id}")
