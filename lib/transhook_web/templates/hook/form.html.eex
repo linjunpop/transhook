@@ -43,7 +43,7 @@
 
       <%= label dispatcher_form, :payload_template %>
       <p>Syntax: JSONPath</p>
-      <%= textarea dispatcher_form, :payload_template %>
+      <%= textarea dispatcher_form, :payload_template, rows: 20, style: "height:100%;" %>
       <%= error_tag dispatcher_form, :payload_template %>
     <% end %>
   <fieldset>
