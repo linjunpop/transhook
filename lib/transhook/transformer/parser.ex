@@ -1,5 +1,5 @@
 defmodule Transhook.Transformer.Parser do
-  def parse(template, json_params) when is_binary(template) and is_binary(json_params) do
+  def parse(template, json_params) when is_binary(template) and is_map(json_params) do
     expression_pattern = ~r/{(?<json_path>.*)}/mU
 
     Regex.scan(expression_pattern, template, capture: :all)
@@ -28,28 +28,24 @@ defmodule Transhook.Transformer.Parser do
     end)
   end
 
-  defp extract_value(value, json_params) do
-    json_path = Jaxon.Path.parse!(value)
-
-    result =
-      json_params
-      |> List.wrap()
-      |> Jaxon.Stream.query(json_path)
-      |> Enum.to_list()
-      |> List.flatten()
+  defp extract_value(json_path, json_params) do
+    result = Warpath.query(json_params, json_path)
 
     case result do
-      [] ->
+      {:ok, []} ->
         ""
 
-      [nil] ->
-        ""
-
-      [v | _] when is_binary(v) ->
+      {:ok, [v | _]} when is_binary(v) ->
         v
 
-      [v | _] when is_integer(v) ->
+      {:ok, [v | _]} when is_integer(v) ->
         Integer.to_string(v)
+
+      {:ok, v} when is_binary(v)->
+        v
+
+      _ ->
+        ""
     end
   end
 end

@@ -14,13 +14,11 @@ defmodule TranshookWeb.API.HookController do
 
       hook ->
         Logger.info("Params: #{inspect(params)}")
-        json = Jason.encode!(params)
 
         Logger.info("Endpoint ID: #{endpoint_id}")
         Logger.info("Hook ID: #{hook.id}")
-        Logger.info("Data: #{inspect(json)}")
 
-        Transformer.transform(hook, json)
+        Transformer.transform(hook, params)
 
         responder = hook.responder
 

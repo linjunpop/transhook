@@ -5,8 +5,8 @@ defmodule Transhook.Transformer do
 
   alias Transhook.Webhook.Hook
 
-  @spec transform(Transhook.Webhook.Hook.t(), binary) :: any
-  def transform(%Hook{} = hook, params) when is_struct(hook) and is_binary(params) do
+  @spec transform(Transhook.Webhook.Hook.t(), map()) :: any
+  def transform(%Hook{} = hook, params) when is_struct(hook) and is_map(params) do
     dispatcher = hook.dispatcher
 
     Logger.info(params)
