@@ -17,9 +17,18 @@ defmodule TranshookWeb.Router do
   scope "/", TranshookWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    # get "/", PageController, :index
 
-    resources "/hooks", HookController
+    live "/", PageLive, :index
+
+    # resources "/hooks", HookController
+
+    live "/hooks", HookLive.Index, :index
+    live "/hooks/new", HookLive.Index, :new
+    live "/hooks/:id/edit", HookLive.Index, :edit
+
+    live "/hooks/:id", HookLive.Show, :show
+    live "/hooks/:id/show/edit", HookLive.Show, :edit
   end
 
   scope "/api", TranshookWeb.API, as: :api do

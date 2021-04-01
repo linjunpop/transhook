@@ -1,0 +1,64 @@
+<h1>Show Hook</h1>
+
+<span><%= live_patch "Edit", to: Routes.hook_show_path(@socket, :edit, @hook), class: "button" %></span>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, TranshookWeb.HookLive.FormComponent,
+    id: @hook.id,
+    title: @page_title,
+    action: @live_action,
+    hook: @hook,
+    return_to: Routes.hook_show_path(@socket, :show, @hook) %>
+<% end %>
+
+<section>
+  <ul>
+    <li>
+      <strong>Name:</strong>
+      <%= @hook.name %>
+    </li>
+
+    <li>
+      <strong>Endpoint:</strong>
+      <%= link "link", to: Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint) %>
+    </li>
+  </ul>
+
+  <h2>Filters</h2>
+
+  <ul>
+    <%= for filter <- @hook.hook_filters do %>
+      <li>[<%= filter.query %>] <%= filter.operator %> [<%= filter.value %>]</li>
+    <% end %>
+  </ul>
+
+  <h2>Dispatcher</h2>
+
+  <ul>
+    <li>
+      <strong>URL:</strong>
+      <%= @hook.dispatcher.url %>
+    </li>
+
+    <li>
+      <strong>HTTP Method:</strong>
+      <%= @hook.dispatcher.http_method %>
+    </li>
+
+    <li>
+      <strong>Content Type:</strong>
+      <%= @hook.dispatcher.content_type %>
+    </li>
+
+    <li>
+      <strong>Payload template:</strong>
+      <pre><%= @hook.dispatcher.payload_template %></pre>
+    </li>
+  </ul>
+
+</section>
+
+
+<span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: @hook.id, data: [confirm: "Are you sure?"] %></span>
+
+<span><%= live_redirect "Back", to: Routes.hook_index_path(@socket, :index) %></span>
