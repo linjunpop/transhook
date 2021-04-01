@@ -3,7 +3,6 @@ defmodule TranshookWeb.API.HookController do
   require Logger
 
   alias Transhook.Webhook
-  alias Transhook.Webhook.Hook
   alias Transhook.Transformer
 
   def handle_hook(conn, %{"endpoint_id" => endpoint_id} = params) do

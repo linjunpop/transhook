@@ -41,7 +41,7 @@ defmodule Transhook.Transformer.Parser do
       {:ok, [v | _]} when is_integer(v) ->
         Integer.to_string(v)
 
-      {:ok, v} when is_binary(v)->
+      {:ok, v} when is_binary(v) ->
         v
 
       _ ->

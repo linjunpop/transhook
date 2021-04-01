@@ -1,3 +1,0 @@
-<section>
-  <img src="<%= Routes.static_path(@conn, "/images/intro.png") %>" alt="Intro image"/>
-</section>

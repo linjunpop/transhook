@@ -1,0 +1,31 @@
+<h1>Listing Hooks</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, TranshookWeb.HookLive.FormComponent,
+    id: @hook.id || :new,
+    title: @page_title,
+    action: @live_action,
+    hook: @hook,
+    return_to: Routes.hook_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Webhook Endpoint</th>
+    </tr>
+  </thead>
+  <tbody id="hooks">
+    <%= for hook <- @hooks do %>
+      <tr id="hook-<%= hook.id %>">
+        <td>
+          <%= live_redirect hook.name, to: Routes.hook_show_path(@socket, :show, hook) %>
+        </td>
+        <td><%= Routes.api_hook_url(@socket, :handle_hook, hook.endpoint) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Hook", to: Routes.hook_index_path(@socket, :new) %></span>

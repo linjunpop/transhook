@@ -2,6 +2,7 @@ defmodule Transhook.Transformer do
   require Logger
 
   alias Transhook.Transformer.Parser
+  alias Transhook.Transformer.Filter
 
   alias Transhook.Webhook.Hook
 
@@ -11,12 +12,16 @@ defmodule Transhook.Transformer do
 
     Logger.info(params)
 
-    payload = Parser.parse(dispatcher.payload_template, params)
+    if Filter.should_continue?(hook.hook_filters, params) do
+      payload = Parser.parse(dispatcher.payload_template, params)
 
-    Logger.info("=> Going to send payload to #{dispatcher.url}")
-    Logger.info(payload)
+      Logger.info("=> Going to send payload to #{dispatcher.url}")
+      Logger.info(payload)
 
-    request(dispatcher.http_method, dispatcher.url, dispatcher.content_type, payload)
+      request(dispatcher.http_method, dispatcher.url, dispatcher.content_type, payload)
+    else
+      Logger.warn("=> Stop as the filter check fails")
+    end
   end
 
   def request(http_method, url, content_type, playload) do
