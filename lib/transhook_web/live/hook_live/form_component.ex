@@ -27,6 +27,27 @@ defmodule TranshookWeb.HookLive.FormComponent do
     save_hook(socket, socket.assigns.action, hook_params)
   end
 
+  def handle_event("add-filter", _, socket) do
+    existing_filters =
+      Map.get(socket.assigns.changeset.changes, :hook_filters, socket.assigns.hook.hook_filters)
+
+    filters =
+      existing_filters
+      |> Enum.concat([
+        %Transhook.Webhook.HookFilter{
+          query: "",
+          operator: "is",
+          value: ""
+        }
+      ])
+
+    changeset =
+      socket.assigns.changeset
+      |> Ecto.Changeset.put_embed(:hook_filters, filters)
+
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
   defp save_hook(socket, :edit, hook_params) do
     case Webhook.update_hook(socket.assigns.hook, hook_params) do
       {:ok, _hook} ->

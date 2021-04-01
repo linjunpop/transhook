@@ -11,19 +11,25 @@
   <%= error_tag f, :name %>
   <fieldset>
     <legend>Filters - Conditions applied when the hook runs.</legend>
+
     <%= for filter_form <- inputs_for(f, :hook_filters) do %>
-      <%= label filter_form, :query %>
-      <%= text_input filter_form, :query %>
-      <%= error_tag filter_form, :query %>
+      <fieldset>
+        <%= label filter_form, :query %>
+        <span>Syntax: <a href="https://cburgmer.github.io/json-path-comparison/">JSONPath</a></span>
+        <%= text_input filter_form, :query %>
+        <%= error_tag filter_form, :query %>
 
-      <%= label filter_form, :operator %>
-      <%= select filter_form, :operator, ["is"] %>
-      <%= error_tag filter_form, :operator %>
+        <%= label filter_form, :operator %>
+        <%= select filter_form, :operator, ["is"] %>
+        <%= error_tag filter_form, :operator %>
 
-      <%= label filter_form, :value %>
-      <%= text_input filter_form, :value %>
-      <%= error_tag filter_form, :value %>
+        <%= label filter_form, :value %>
+        <%= text_input filter_form, :value %>
+        <%= error_tag filter_form, :value %>
+      </fieldset>
     <% end %>
+
+    <a href="#" phx-click="add-filter" phx-target="<%= @myself %>">Add a filter</a>
   </fieldset>
 
   <fieldset>

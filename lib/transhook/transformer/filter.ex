@@ -3,12 +3,18 @@ defmodule Transhook.Transformer.Filter do
 
   def should_continue?(hook_filters, params) do
     hook_filters
-    |> Enum.any?(fn hook_filter ->
-      check_hook(hook_filter, params)
+    |> Enum.reduce_while(true, fn hook_filter, _acc ->
+      if query_matched?(hook_filter, params) do
+        IO.inspect(:continue)
+        {:cont, true}
+      else
+        IO.inspect(:halt)
+        {:halt, false}
+      end
     end)
   end
 
-  defp check_hook(%HookFilter{query: query, operator: operator, value: value}, params) do
+  defp query_matched?(%HookFilter{query: query, operator: operator, value: value}, params) do
     json_query_value =
       case Warpath.query(params, query) do
         {:ok, []} ->
