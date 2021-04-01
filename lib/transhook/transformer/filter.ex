@@ -5,10 +5,8 @@ defmodule Transhook.Transformer.Filter do
     hook_filters
     |> Enum.reduce_while(true, fn hook_filter, _acc ->
       if query_matched?(hook_filter, params) do
-        IO.inspect(:continue)
         {:cont, true}
       else
-        IO.inspect(:halt)
         {:halt, false}
       end
     end)
