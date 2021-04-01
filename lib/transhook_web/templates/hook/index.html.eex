@@ -5,9 +5,6 @@
     <tr>
       <th>Name</th>
       <th>Endpoint</th>
-      <th>Dispatcher</th>
-      <th>Responder</th>
-
       <th></th>
     </tr>
   </thead>
@@ -20,7 +17,6 @@
       <td>
         <span><%= link "Show", to: Routes.hook_path(@conn, :show, hook) %></span>
         <span><%= link "Edit", to: Routes.hook_path(@conn, :edit, hook) %></span>
-        <span><%= link "Delete", to: Routes.hook_path(@conn, :delete, hook), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
     </tr>
 <% end %>

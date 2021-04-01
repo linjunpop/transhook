@@ -11,7 +11,13 @@ defmodule TranshookWeb.HookController do
   end
 
   def new(conn, _params) do
-    changeset = Webhook.change_hook(%Hook{})
+    changeset =
+      Webhook.change_hook(%Hook{}, %{
+        hook_filters: [
+          %{query: "$.foo", operator: "is", value: "bar"}
+        ]
+      })
+
     render(conn, "new.html", changeset: changeset)
   end
 

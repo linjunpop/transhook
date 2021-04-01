@@ -8,9 +8,25 @@
   <%= label f, :name %>
   <%= text_input f, :name %>
   <%= error_tag f, :name %>
+  <fieldset>
+    <legend>Filters - Conditions applied when the hook runs.</legend>
+    <%= for filter_form <- inputs_for(f, :hook_filters) do %>
+      <%= label filter_form, :query %>
+      <%= text_input filter_form, :query %>
+      <%= error_tag filter_form, :query %>
+
+      <%= label filter_form, :operator %>
+      <%= select filter_form, :operator, ["is"] %>
+      <%= error_tag filter_form, :operator %>
+
+      <%= label filter_form, :value %>
+      <%= text_input filter_form, :value %>
+      <%= error_tag filter_form, :value %>
+    <% end %>
+  </fieldset>
 
   <fieldset>
-    <legend>Responder</legend>
+    <legend>Responder - Response sent back to the webhook sender.</legend>
     <%= for responder_form <- inputs_for(f, :responder) do %>
       <%= label responder_form, :status_code %>
       <%= text_input responder_form, :status_code %>
@@ -27,7 +43,7 @@
   </fieldset>
 
   <fieldset>
-    <legend>Dispatcher</legend>
+    <legend>Dispatcher - The target to send payload.</legend>
     <%= for dispatcher_form <- inputs_for(f, :dispatcher) do %>
       <%= label dispatcher_form, :url %>
       <%= text_input dispatcher_form, :url, placeholder: "https://example.test" %>
@@ -42,11 +58,11 @@
       <%= error_tag dispatcher_form, :content_type %>
 
       <%= label dispatcher_form, :payload_template %>
-      <p>Syntax: JSONPath</p>
-      <%= textarea dispatcher_form, :payload_template, rows: 20, style: "height:100%;" %>
+      <p>Syntax: <a href="https://cburgmer.github.io/json-path-comparison/">JSONPath</a></p>
+      <%= textarea dispatcher_form, :payload_template, rows: 20, style: "height:100%;", placeholder: "{}" %>
       <%= error_tag dispatcher_form, :payload_template %>
     <% end %>
-  <fieldset>
+  </fieldset>
 
   <div>
     <%= submit "Save" %>

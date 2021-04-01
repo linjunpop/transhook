@@ -29,3 +29,9 @@
 .alert:empty {
   display: none;
 }
+
+.invalid-feedback {
+  display: block;
+  color: #a94442;
+  padding: 4px;
+}
