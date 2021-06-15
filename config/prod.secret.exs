@@ -27,8 +27,8 @@ config :transhook, TranshookWeb.Endpoint,
   secret_key_base: secret_key_base
 
 config :transhook, :basic_auth,
-  username: System.get_env!("BASIC_AUTH_USERNAME"),
-  password: System.get_env!("BASIC_AUTH_PASSWORD")
+  username: System.fetch_env!("BASIC_AUTH_USERNAME"),
+  password: System.fetch_env!("BASIC_AUTH_PASSWORD")
 
 # ## Using releases (Elixir v1.9+)
 #
