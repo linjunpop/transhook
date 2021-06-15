@@ -1,5 +1,6 @@
 defmodule TranshookWeb.Router do
   use TranshookWeb, :router
+  import Plug.BasicAuth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,14 +15,19 @@ defmodule TranshookWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :admin do
+    plug :basic_auth, Application.get_env(:transhook, :basic_auth, [])
+  end
+
   scope "/", TranshookWeb do
     pipe_through :browser
 
-    # get "/", PageController, :index
-
     live "/", PageLive, :index
+  end
 
-    # resources "/hooks", HookController
+  scope "/admin", TranshookWeb, as: :admin do
+    pipe_through :browser
+    pipe_through :admin
 
     live "/hooks", HookLive.Index, :index
     live "/hooks/new", HookLive.Index, :new

@@ -9,15 +9,15 @@ defmodule TranshookWeb.LiveHelpers do
 
   ## Examples
 
-      <%= live_modal @socket, TranshookWeb.HookLive.FormComponent,
+      <%= live_modal TranshookWeb.HookLive.FormComponent,
         id: @hook.id || :new,
         action: @live_action,
         hook: @hook,
-        return_to: Routes.hook_index_path(@socket, :index) %>
+        return_to: Routes.admin_hook_index_path(@socket, :index) %>
   """
-  def live_modal(socket, component, opts) do
+  def live_modal(component, opts) do
     path = Keyword.fetch!(opts, :return_to)
     modal_opts = [id: :modal, return_to: path, component: component, opts: opts]
-    live_component(socket, TranshookWeb.ModalComponent, modal_opts)
+    live_component(TranshookWeb.ModalComponent, modal_opts)
   end
 end

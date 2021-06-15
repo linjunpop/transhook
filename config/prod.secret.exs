@@ -1,8 +1,4 @@
-# In this file, we load production configuration and secrets
-# from environment variables. You can also hardcode secrets,
-# although such is generally not recommended and you have to
-# remember to add this file to your .gitignore.
-use Mix.Config
+import Config
 
 database_url =
   System.get_env("DATABASE_URL") ||
@@ -29,6 +25,10 @@ config :transhook, TranshookWeb.Endpoint,
     transport_options: [socket_opts: [:inet6]]
   ],
   secret_key_base: secret_key_base
+
+config :transhook, :basic_auth,
+  username: System.get_env!("BASIC_AUTH_USERNAME"),
+  password: System.get_env!("BASIC_AUTH_PASSWORD")
 
 # ## Using releases (Elixir v1.9+)
 #

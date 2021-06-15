@@ -1,12 +1,12 @@
 <h1>Listing Hooks</h1>
 
 <%= if @live_action in [:new, :edit] do %>
-  <%= live_modal @socket, TranshookWeb.HookLive.FormComponent,
+  <%= live_modal TranshookWeb.HookLive.FormComponent,
     id: @hook.id || :new,
     title: @page_title,
     action: @live_action,
     hook: @hook,
-    return_to: Routes.hook_index_path(@socket, :index) %>
+    return_to: Routes.admin_hook_index_path(@socket, :index) %>
 <% end %>
 
 <table>
@@ -20,7 +20,7 @@
     <%= for hook <- @hooks do %>
       <tr id="hook-<%= hook.id %>">
         <td>
-          <%= live_redirect hook.name, to: Routes.hook_show_path(@socket, :show, hook) %>
+          <%= live_redirect hook.name, to: Routes.admin_hook_show_path(@socket, :show, hook) %>
         </td>
         <td><%= Routes.api_hook_url(@socket, :handle_hook, hook.endpoint) %></td>
       </tr>
@@ -28,4 +28,4 @@
   </tbody>
 </table>
 
-<span><%= live_patch "New Hook", to: Routes.hook_index_path(@socket, :new) %></span>
+<span><%= live_patch "New Hook", to: Routes.admin_hook_index_path(@socket, :new) %></span>

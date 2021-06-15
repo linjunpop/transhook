@@ -1,14 +1,14 @@
 <h1>Show Hook</h1>
 
-<span><%= live_patch "Edit", to: Routes.hook_show_path(@socket, :edit, @hook), class: "button" %></span>
+<span><%= live_patch "Edit", to: Routes.admin_hook_show_path(@socket, :edit, @hook), class: "button" %></span>
 
 <%= if @live_action in [:edit] do %>
-  <%= live_modal @socket, TranshookWeb.HookLive.FormComponent,
+  <%= live_modal TranshookWeb.HookLive.FormComponent,
     id: @hook.id,
     title: @page_title,
     action: @live_action,
     hook: @hook,
-    return_to: Routes.hook_show_path(@socket, :show, @hook) %>
+    return_to: Routes.admin_hook_show_path(@socket, :show, @hook) %>
 <% end %>
 
 <section>
@@ -61,4 +61,4 @@
 
 <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: @hook.id, data: [confirm: "Are you sure?"] %></span>
 
-<span><%= live_redirect "Back", to: Routes.hook_index_path(@socket, :index) %></span>
+<span><%= live_redirect "Back", to: Routes.admin_hook_index_path(@socket, :index) %></span>
