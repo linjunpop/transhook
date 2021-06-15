@@ -1,0 +1,45 @@
+{
+  "name": "Transhook",
+  "description": "A connector between webhooks.",
+  "repository": "https://github.com/linjunpop/transhook",
+  "keywords": [
+    "elixir",
+    "webhook",
+    "connector"
+  ],
+  "env": {
+    "SECRET_KEY_BASE": {
+      "description": "A secret salt",
+      "generator": "secret"
+    },
+    "POOL_SIZE": {
+      "description": "Postgres database pool size",
+      "value": "18"
+    },
+    "HOST": {
+      "description": "Your website domain",
+      "value": "18"
+    },
+    "BASIC_AUTH_USERNAME": {
+      "description": "The admin username",
+      "value": "admin"
+    },
+    "BASIC_AUTH_PASSWORD": {
+      "description": "The admin password",
+      "value": "PA5sw0rD"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+    },
+    {
+      "url": "https://github.com/gjaldon/heroku-buildpack-phoenix-static.git"
+    }
+  ]
+}
