@@ -40,7 +40,7 @@ module.exports = (env, options) => {
             'css-loader',
             'sass-loader',
           ],
-        }
+        },
       ]
     },
     plugins: [

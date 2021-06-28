@@ -145,4 +145,8 @@ defmodule Transhook.Webhook do
 
     Repo.one(query)
   end
+
+  def get_papertrail!(papertrail_id) do
+    Repo.get!(Papertrail, papertrail_id)
+  end
 end

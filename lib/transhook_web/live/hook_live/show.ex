@@ -13,10 +13,10 @@ defmodule TranshookWeb.HookLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:hook, Webhook.get_hook!(id))
-     |> assign(:latest_papertrail, Webhook.get_latest_papertrail(id))}
+     |> assign(:hook, Webhook.get_hook!(id))}
   end
 
   defp page_title(:show), do: "Show Hook"
   defp page_title(:edit), do: "Edit Hook"
+  defp page_title(:sample), do: "Sample"
 end

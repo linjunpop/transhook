@@ -9,23 +9,21 @@
     return_to: Routes.admin_hook_index_path(@socket, :index) %>
 <% end %>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Webhook Endpoint</th>
     </tr>
   </thead>
-  <tbody id="hooks">
+  <tbody>
     <%= for hook <- @hooks do %>
       <tr id="hook-<%= hook.id %>">
         <td>
           <%= live_redirect hook.name, to: Routes.admin_hook_show_path(@socket, :show, hook) %>
         </td>
-        <td><%= Routes.api_hook_url(@socket, :handle_hook, hook.endpoint) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<span><%= live_patch "New Hook", to: Routes.admin_hook_index_path(@socket, :new) %></span>
+<span><%= live_patch "New Hook", to: Routes.admin_hook_index_path(@socket, :new), class: "btn btn-primary" %></span>

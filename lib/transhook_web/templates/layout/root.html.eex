@@ -14,20 +14,35 @@
     <header>
       <section class="container">
         <nav role="navigation">
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><%= live_redirect "Hooks", to: Routes.admin_hook_index_path(@conn, :index) %></li>
+          <ul class="nav">
+            <li class="nav-item">
+              <a href="/" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <%= live_redirect "Hooks", to: Routes.admin_hook_index_path(@conn, :index), class: "nav-link" %>
+            </li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+              <li class="nav-item">
+                <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "nav-link" %>
+              </li>
             <% end %>
           </ul>
         </nav>
       </section>
     </header>
     <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <%= @inner_content %>
+      <div class="row">
+        <div class="col">
+          <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+          <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= @inner_content %>
+        </div>
+      </div>
     </main>
   </body>
 </html>

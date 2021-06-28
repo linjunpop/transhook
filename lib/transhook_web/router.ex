@@ -35,6 +35,7 @@ defmodule TranshookWeb.Router do
 
     live "/hooks/:id", HookLive.Show, :show
     live "/hooks/:id/show/edit", HookLive.Show, :edit
+    live "/hooks/:id/show/sample", HookLive.Show, :sample
   end
 
   scope "/api", TranshookWeb.API, as: :api do
