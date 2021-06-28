@@ -7,6 +7,7 @@ defmodule Transhook.Webhook do
   alias Transhook.Repo
 
   alias Transhook.Webhook.Hook
+  alias Transhook.Webhook.Papertrail
 
   @doc """
   Returns the list of hooks.
@@ -108,5 +109,40 @@ defmodule Transhook.Webhook do
   """
   def change_hook(%Hook{} = hook, attrs \\ %{}) do
     Hook.changeset(hook, attrs)
+  end
+
+  @doc """
+  Creates a papertrail.
+  """
+  def create_papertrail(attrs \\ %{}) do
+    %Papertrail{}
+    |> Papertrail.changeset(attrs)
+    |> Repo.insert(on_conflict: :replace_all, conflict_target: :hook_id)
+  end
+
+  @doc """
+  Get a list of papertrails for a Hook with `hook_id`
+  """
+  def list_papertrails(hook_id) do
+    query =
+      from p in Papertrail,
+        where: p.hook_id == ^hook_id,
+        limit: 10,
+        order_by: [desc: :inserted_at]
+
+    Repo.all(query)
+  end
+
+  @doc """
+  Get the latest papertrail for a Hook with `hook_id`
+  """
+  def get_latest_papertrail(hook_id) do
+    query =
+      from p in Papertrail,
+        where: p.hook_id == ^hook_id,
+        limit: 1,
+        order_by: [desc: :inserted_at]
+
+    Repo.one(query)
   end
 end

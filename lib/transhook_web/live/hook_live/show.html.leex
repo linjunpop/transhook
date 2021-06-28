@@ -20,7 +20,7 @@
 
     <li>
       <strong>Endpoint:</strong>
-      <%= link "link", to: Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint) %>
+      <%= link "Webhook Link", to: Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint) %>
     </li>
   </ul>
 
@@ -55,6 +55,16 @@
       <pre><%= @hook.dispatcher.payload_template %></pre>
     </li>
   </ul>
+
+  <h2>A sample request data</h2>
+  <div>
+    <%= if @latest_papertrail do %>
+      <pre><%= @latest_papertrail.request_data |> Jason.encode!(pretty: true) %></pre>
+    <% else %>
+      <p>Cannot find a sample, please try to send a request to <%= Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint) %></p>
+    <% end %>
+  </div>
+
 
 </section>
 

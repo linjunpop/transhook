@@ -4,13 +4,20 @@ defmodule Transhook.Transformer do
   alias Transhook.Transformer.Parser
   alias Transhook.Transformer.Filter
 
+  alias Transhook.Webhook
   alias Transhook.Webhook.Hook
 
-  @spec transform(Transhook.Webhook.Hook.t(), map()) :: any
+  @spec transform(Hook.t(), map()) :: any
   def transform(%Hook{} = hook, params) when is_struct(hook) and is_map(params) do
     dispatcher = hook.dispatcher
 
-    Logger.info(params)
+    case Webhook.create_papertrail(%{request_data: params, hook_id: hook.id}) do
+      {:ok, papertrail} ->
+        Logger.info(papertrail)
+
+      {:error, err} ->
+        Logger.warn(err)
+    end
 
     if Filter.should_continue?(hook.hook_filters, params) do
       payload = Parser.parse(dispatcher.payload_template, params)
