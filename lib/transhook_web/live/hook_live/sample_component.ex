@@ -13,18 +13,4 @@ defmodule TranshookWeb.HookLive.SampleComponent do
      |> assign(assigns)
      |> assign(:latest_papertrail, papertrail)}
   end
-
-  @impl true
-  def handle_event(
-        "try_sample",
-        %{"hook-id" => hook_id, "papertrail-id" => papertrail_id},
-        socket
-      ) do
-    # hook = Webhook.get_hook!(hook_id)
-    # papertrail = Webhook.get_papertrail!(papertrail_id)
-
-    Transformer.transform(socket.assigns.hook, socket.assigns.papertrail.request_data)
-
-    {:noreply, socket}
-  end
 end
