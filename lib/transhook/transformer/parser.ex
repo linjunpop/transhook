@@ -32,20 +32,18 @@ defmodule Transhook.Transformer.Parser do
     result = Warpath.query(json_params, json_path)
 
     case result do
-      {:ok, []} ->
-        ""
+      {:ok, content_list} when is_list(content_list) ->
+        content_list
+        |> Enum.map(fn value ->
+          normalize_value(value)
+        end)
+        |> Enum.join("\n")
 
-      {:ok, [v | _]} when is_binary(v) ->
-        v
-
-      {:ok, [v | _]} when is_integer(v) ->
-        Integer.to_string(v)
-
-      {:ok, v} when is_binary(v) ->
-        v
-
-      _ ->
-        ""
+      {:ok, other_value} ->
+        normalize_value(other_value)
     end
   end
+
+  defp normalize_value(v) when is_binary(v), do: v
+  defp normalize_value(v) when is_integer(v), do: Integer.to_string(v)
 end
