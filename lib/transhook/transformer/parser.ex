@@ -19,10 +19,12 @@ defmodule Transhook.Transformer.Parser do
 
     template_params
     |> Enum.reduce(template, fn {pattern, value}, acc ->
+      # FIXME: very ugly one
       value =
         value
         |> String.replace("\n", "\\n")
         |> String.replace("\r", "\\r")
+        |> String.replace("\t", "\\t")
 
       String.replace(acc, pattern, value)
     end)

@@ -28,7 +28,7 @@ defmodule Transhook.Transformer do
       {:ok, response_json} =
         request(dispatcher.http_method, dispatcher.url, dispatcher.content_type, payload)
 
-      Logger.info("Response #{response_json}")
+      Logger.info("Response:", response_json)
     else
       Logger.warn("=> Stop as the filter check fails")
     end
