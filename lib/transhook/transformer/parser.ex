@@ -46,4 +46,5 @@ defmodule Transhook.Transformer.Parser do
 
   defp normalize_value(v) when is_binary(v), do: v
   defp normalize_value(v) when is_integer(v), do: Integer.to_string(v)
+  defp normalize_value(nil), do: ""
 end
