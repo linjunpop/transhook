@@ -47,7 +47,7 @@ defmodule Transhook.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:warpath, "~> 0.6.0"},
-      {:hackney, "~> 1.15"},
+      {:finch, "~> 0.8"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
   end

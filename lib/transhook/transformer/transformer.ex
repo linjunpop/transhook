@@ -35,31 +35,26 @@ defmodule Transhook.Transformer do
   end
 
   def request(http_method, url, content_type, playload) do
-    with {:ok, status_code, _headers, client_ref} when status_code in [200, 201] <-
+    with {:ok, %Finch.Response{status: status, body: body}} when status in [200, 201] <-
            do_request(http_method, url, content_type, playload),
-         {:ok, body} <- :hackney.body(client_ref),
          {:ok, json} <- Jason.decode(body) do
       {:ok, json}
     else
-      {:ok, status_code, _headers, client_ref} ->
-        {:ok, msg} = :hackney.body(client_ref)
-        {:error, %{code: status_code, message: msg}}
+      {:ok, %Finch.Response{body: body, status: status}} ->
+        {:error, %{code: status, message: body}}
 
       {:error, reason} ->
         {:error, reason}
     end
   end
 
-  defp do_request(http_method, url, content_type, playload) do
+  defp do_request(http_method, url, content_type, body) do
     request_headers = [
       {"content-type", content_type},
       {"accept", "application/json"}
     ]
 
-    options = [
-      {:pool, :transhook_hackney}
-    ]
-
-    :hackney.request(http_method, url, request_headers, playload, options)
+    request = Finch.build(http_method, url, request_headers, body)
+    Finch.request(request, TranshookFinch)
   end
 end

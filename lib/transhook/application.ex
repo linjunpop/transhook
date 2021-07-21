@@ -14,9 +14,11 @@ defmodule Transhook.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Transhook.PubSub},
       # Start the Endpoint (http/https)
-      TranshookWeb.Endpoint
+      TranshookWeb.Endpoint,
       # Start a worker by calling: Transhook.Worker.start_link(arg)
       # {Transhook.Worker, arg}
+
+      {Finch, name: TranshookFinch}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

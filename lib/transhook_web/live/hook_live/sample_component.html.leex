@@ -7,7 +7,7 @@
       <span>
       	<%= link "Send this sample data to target webhook", to: "#",
           phx_click: "try_sample",
-          phx_value_hook_id: @hook.id, phx_value_papertrail_id: @latest_papertrail.id, data: [confirm: "A request will be sent to #{Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint)}, are you sure?"],
+          phx_value_hook_id: @hook.id, phx_value_papertrail_id: @latest_papertrail.id, data: [confirm: "A request will be sent to #{@hook.dispatcher.url}, are you sure?"],
           class: "btn btn-primary"
         %>
 	    </span>
