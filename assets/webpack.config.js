@@ -36,15 +36,12 @@ module.exports = (env, options) => {
         {
           test: /\.[s]?css$/,
           use: [
-            MiniCssExtractPlugin.loader,
             'css-loader',
-            'sass-loader',
           ],
         },
       ]
     },
     plugins: [
-      new MiniCssExtractPlugin({ filename: '../css/app.css' }),
       new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
     ]
   }
