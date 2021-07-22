@@ -1,61 +1,195 @@
 defmodule Transhook.ParserTest do
-  use Transhook.DataCase
+  use Transhook.ServiceCase
 
   test "parse json" do
-    json_params = ~s"""
+    json_params =
+      ~S"""
+      {
+        "object_kind": "issue",
+        "event_type": "issue",
+        "user": {
+          "id": 1,
+          "name": "Administrator",
+          "username": "root",
+          "avatar_url": "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=40\u0026d=identicon",
+          "email": "admin@example.com"
+        },
+        "project": {
+          "id": 1,
+          "name":"Gitlab Test",
+          "description":"Aut reprehenderit ut est.",
+          "web_url":"http://example.com/gitlabhq/gitlab-test",
+          "avatar_url":null,
+          "git_ssh_url":"git@example.com:gitlabhq/gitlab-test.git",
+          "git_http_url":"http://example.com/gitlabhq/gitlab-test.git",
+          "namespace":"GitlabHQ",
+          "visibility_level":20,
+          "path_with_namespace":"gitlabhq/gitlab-test",
+          "default_branch":"master",
+          "ci_config_path": null,
+          "homepage":"http://example.com/gitlabhq/gitlab-test",
+          "url":"http://example.com/gitlabhq/gitlab-test.git",
+          "ssh_url":"git@example.com:gitlabhq/gitlab-test.git",
+          "http_url":"http://example.com/gitlabhq/gitlab-test.git"
+        },
+        "object_attributes": {
+          "id": 301,
+          "title": "New API: create/update/delete file",
+          "assignee_ids": [51],
+          "assignee_id": 51,
+          "author_id": 51,
+          "project_id": 14,
+          "created_at": "2013-12-03T17:15:43Z",
+          "updated_at": "2013-12-03T17:15:43Z",
+          "updated_by_id": 1,
+          "last_edited_at": null,
+          "last_edited_by_id": null,
+          "relative_position": 0,
+          "description": "Create new API for manipulations with repository",
+          "milestone_id": null,
+          "state_id": 1,
+          "confidential": false,
+          "discussion_locked": true,
+          "due_date": null,
+          "moved_to_id": null,
+          "duplicated_to_id": null,
+          "time_estimate": 0,
+          "total_time_spent": 0,
+          "time_change": 0,
+          "human_total_time_spent": null,
+          "human_time_estimate": null,
+          "human_time_change": null,
+          "weight": null,
+          "iid": 23,
+          "url": "http://example.com/diaspora/issues/23",
+          "state": "opened",
+          "action": "open",
+          "labels": [{
+              "id": 206,
+              "title": "API",
+              "color": "#ffffff",
+              "project_id": 14,
+              "created_at": "2013-12-03T17:15:43Z",
+              "updated_at": "2013-12-03T17:15:43Z",
+              "template": false,
+              "description": "API related issues",
+              "type": "ProjectLabel",
+              "group_id": 41
+            }]
+        },
+        "repository": {
+          "name": "Gitlab Test",
+          "url": "http://example.com/gitlabhq/gitlab-test.git",
+          "description": "Aut reprehenderit ut est.",
+          "homepage": "http://example.com/gitlabhq/gitlab-test"
+        },
+        "assignees": [{
+          "name": "User1",
+          "username": "user1",
+          "avatar_url": "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=40\u0026d=identicon"
+        }],
+        "assignee": {
+          "name": "User1",
+          "username": "user1",
+          "avatar_url": "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=40\u0026d=identicon"
+        },
+        "labels": [{
+          "id": 206,
+          "title": "API",
+          "color": "#ffffff",
+          "project_id": 14,
+          "created_at": "2013-12-03T17:15:43Z",
+          "updated_at": "2013-12-03T17:15:43Z",
+          "template": false,
+          "description": "API related issues",
+          "type": "ProjectLabel",
+          "group_id": 41
+        }],
+        "changes": {
+          "updated_by_id": {
+            "previous": null,
+            "current": 1
+          },
+          "updated_at": {
+            "previous": "2017-09-15 16:50:55 UTC",
+            "current": "2017-09-15 16:52:00 UTC"
+          },
+          "labels": {
+            "previous": [{
+              "id": 206,
+              "title": "API",
+              "color": "#ffffff",
+              "project_id": 14,
+              "created_at": "2013-12-03T17:15:43Z",
+              "updated_at": "2013-12-03T17:15:43Z",
+              "template": false,
+              "description": "API related issues",
+              "type": "ProjectLabel",
+              "group_id": 41
+            }],
+            "current": [{
+              "id": 205,
+              "title": "Platform",
+              "color": "#123123",
+              "project_id": 14,
+              "created_at": "2013-12-03T17:15:43Z",
+              "updated_at": "2013-12-03T17:15:43Z",
+              "template": false,
+              "description": "Platform related issues",
+              "type": "ProjectLabel",
+              "group_id": 41
+            }]
+          }
+        }
+      }
+      """
+      |> Jason.decode!()
+
+    template = ~S"""
     {
-      "object_kind": "tag_push",
-      "before": "0000000000000000000000000000000000000000",
-      "after": "82b3d5ae55f7080f1e6022629cdb57bfae7cccc7",
-      "ref": "refs/tags/v1.0.0",
-      "checkout_sha": "82b3d5ae55f7080f1e6022629cdb57bfae7cccc7",
-      "user_id": 1,
-      "user_name": "John Smith",
-      "user_avatar": "https://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=8://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=80",
-      "project_id": 1,
-      "project":{
-        "id": 1,
-        "name":"Example",
-        "description":"",
-        "web_url":"http://example.com/jsmith/example",
-        "avatar_url":null,
-        "git_ssh_url":"git@example.com:jsmith/example.git",
-        "git_http_url":"http://example.com/jsmith/example.git",
-        "namespace":"Jsmith",
-        "visibility_level":0,
-        "path_with_namespace":"jsmith/example",
-        "default_branch":"master",
-        "homepage":"http://example.com/jsmith/example",
-        "url":"git@example.com:jsmith/example.git",
-        "ssh_url":"git@example.com:jsmith/example.git",
-        "http_url":"http://example.com/jsmith/example.git"
-      },
-      "repository":{
-        "name": "Example",
-        "url": "ssh://git@example.com/jsmith/example.git",
-        "description": "",
-        "homepage": "http://example.com/jsmith/example",
-        "git_http_url":"http://example.com/jsmith/example.git",
-        "git_ssh_url":"git@example.com:jsmith/example.git",
-        "visibility_level":0
-      },
-      "commits": [],
-      "total_commits_count": 0
+      "activity": "[{$.project.name}]",
+      "title": "",
+      "body": "",
+      "attachments": [{
+        "fields": [{
+            "title": "Issue #{$.object_attributes.iid} - {$.object_attributes.title}",
+            "value": "{$.object_attributes.url}",
+            "style": "Long"
+          },
+          {
+            "title": "Labels",
+            "value": "{$.object_attributes.labels[*].title}",
+            "style": "Long"
+          }
+        ]
+      }]
     }
-    """
-
-    template = ~s"""
-    Ref: {$.ref}
-
-    Project: {$.project.name}
     """
 
     result = Transhook.Transformer.Parser.parse(template, json_params)
 
-    assert result == ~s"""
-           Ref: refs/tags/v1.0.0
-
-           Project: Example
-           """
+    assert result ==
+             ~S"""
+             {
+               "activity": "[Gitlab Test]",
+               "title": "",
+               "body": "",
+               "attachments": [{
+                 "fields": [{
+                     "title": "Issue #23 - New API: create/update/delete file",
+                     "value": "http://example.com/diaspora/issues/23",
+                     "style": "Long"
+                   },
+                   {
+                     "title": "Labels",
+                     "value": "API",
+                     "style": "Long"
+                   }
+                 ]
+               }]
+             }
+             """
+             |> Jason.decode!()
+             |> Jason.encode!()
   end
 end

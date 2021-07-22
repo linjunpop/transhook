@@ -48,7 +48,8 @@ defmodule Transhook.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:warpath, "~> 0.6.0"},
       {:finch, "~> 0.8"},
-      {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:nimble_parsec, "~> 1.0"}
     ]
   end
 

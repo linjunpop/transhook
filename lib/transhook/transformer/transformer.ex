@@ -26,7 +26,12 @@ defmodule Transhook.Transformer do
       Logger.info(payload)
 
       {:ok, response_json} =
-        request(dispatcher.http_method, dispatcher.url, dispatcher.content_type, payload)
+        request(
+          dispatcher.http_method |> String.to_atom(),
+          dispatcher.url,
+          dispatcher.content_type,
+          payload
+        )
 
       Logger.info("Response:", response_json)
     else
@@ -40,7 +45,7 @@ defmodule Transhook.Transformer do
          {:ok, json} <- Jason.decode(body) do
       {:ok, json}
     else
-      {:ok, %Finch.Response{body: body, status: status}} ->
+      {:ok, %Finch.Response{body: body, status: status} = response} ->
         {:error, %{code: status, message: body}}
 
       {:error, reason} ->
@@ -50,11 +55,11 @@ defmodule Transhook.Transformer do
 
   defp do_request(http_method, url, content_type, body) do
     request_headers = [
-      {"content-type", content_type},
-      {"accept", "application/json"}
+      {"Content-Type", content_type}
     ]
 
     request = Finch.build(http_method, url, request_headers, body)
+
     Finch.request(request, TranshookFinch)
   end
 end
