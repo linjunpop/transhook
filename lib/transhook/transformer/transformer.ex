@@ -32,8 +32,6 @@ defmodule Transhook.Transformer do
           dispatcher.content_type,
           payload
         )
-
-      Logger.info("Response:", response_json)
     else
       Logger.warn("=> Stop as the filter check fails")
     end
@@ -43,9 +41,11 @@ defmodule Transhook.Transformer do
     with {:ok, %Finch.Response{status: status, body: body}} when status in [200, 201] <-
            do_request(http_method, url, content_type, playload),
          {:ok, json} <- Jason.decode(body) do
+      Logger.info("Receive a success response: #{status}, #{body}")
       {:ok, json}
     else
-      {:ok, %Finch.Response{body: body, status: status} = response} ->
+      {:ok, %Finch.Response{body: body, status: status} = _response} ->
+        Logger.warn("Receive a failed response: #{status}, #{body}")
         {:error, %{code: status, message: body}}
 
       {:error, reason} ->

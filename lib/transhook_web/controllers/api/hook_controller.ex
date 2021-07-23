@@ -12,10 +12,12 @@ defmodule TranshookWeb.API.HookController do
         |> resp(404, "Not found")
 
       hook ->
-        Logger.info("Params: #{inspect(params)}")
-
-        Logger.info("Endpoint ID: #{endpoint_id}")
-        Logger.info("Hook ID: #{hook.id}")
+        Logger.info(%{
+          params: params,
+          endpoint_id: endpoint_id,
+          hook_id: hook.id,
+          name: hook.name
+        })
 
         Transformer.transform(hook, params)
 
