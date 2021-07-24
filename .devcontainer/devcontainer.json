@@ -7,7 +7,8 @@
   "extensions": [
     "jakebecker.elixir-ls",
     "eamodio.gitlens",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "ckolkman.vscode-postgres"
   ],
   "forwardPorts": [
     4000
