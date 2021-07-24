@@ -1,7 +1,9 @@
 {
-  "image": "hexpm/elixir:1.12.2-erlang-24.0.4-ubuntu-focal-20210325",
-  "name": "transhook-devcontainer",
-  "onCreateCommand": "elixir --version",
+  "dockerComposeFile": [
+    "docker-compose.yml"
+  ],
+  "workspaceFolder": "/workspace/transhook",
+  "service": "app_dev",
   "extensions": [
     "jakebecker.elixir-ls",
     "eamodio.gitlens",
