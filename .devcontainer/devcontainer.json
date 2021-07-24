@@ -2,6 +2,11 @@
   "image": "hexpm/elixir:1.12.2-erlang-24.0.4-ubuntu-focal-20210325",
   "name": "transhook-devcontainer",
   "onCreateCommand": "elixir --version",
+  "extensions": [
+    "jakebecker.elixir-ls",
+    "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker"
+  ],
   "forwardPorts": [
     4000
   ]
