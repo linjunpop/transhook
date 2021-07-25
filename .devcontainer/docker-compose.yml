@@ -1,0 +1,29 @@
+version: "3.6"
+
+services:
+  app_dev:
+    build:
+      # Set the context to the parent directory, so we can add `.tool-versions` to the container
+      context: ../
+      dockerfile: .devcontainer/Dockerfile
+    environment:
+      MIX_ENV: dev
+    volumes:
+      - ../:/workspace/transhook
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+    depends_on:
+      - db
+  db:
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    image: 'postgres:11-alpine'
+    restart: always
+    volumes:
+      - 'pgdata:/var/lib/postgresql/data'
+volumes:
+  pgdata:
