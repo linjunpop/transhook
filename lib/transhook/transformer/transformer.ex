@@ -25,7 +25,7 @@ defmodule Transhook.Transformer do
       Logger.info("=> Going to send payload to #{dispatcher.url}")
       Logger.info(payload)
 
-      {:ok, response_json} =
+      {:ok, _response_json} =
         request(
           dispatcher.http_method |> String.to_atom(),
           dispatcher.url,

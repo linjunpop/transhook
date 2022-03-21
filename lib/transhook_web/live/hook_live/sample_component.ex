@@ -2,7 +2,6 @@ defmodule TranshookWeb.HookLive.SampleComponent do
   use TranshookWeb, :live_component
 
   alias Transhook.Webhook
-  alias Transhook.Transformer
 
   @impl true
   def update(%{hook: hook} = assigns, socket) do

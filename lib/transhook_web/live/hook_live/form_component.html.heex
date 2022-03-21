@@ -1,0 +1,83 @@
+<div>
+  <h2><%= @title %></h2>
+
+  <.form
+   id="hook-form"
+   let={f}
+   for={@changeset}
+   phx-target={@myself}
+   phx-change="validate"
+   phx-submit="save">
+
+    <%= label f, :name, class: "form-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+
+    <fieldset class="my-4">
+      <legend>Filters - Conditions applied when the hook runs.</legend>
+
+      <%= for filter_form <- inputs_for(f, :hook_filters) do %>
+        <div class="row g-3">
+          <div class="col-auto">
+            <%= text_input filter_form, :query, class: "form-control" %>
+            <div class="form-text">Syntax: <a href="https://cburgmer.github.io/json-path-comparison/">JSONPath</a></div>
+            <%= error_tag filter_form, :query %>
+          </div>
+
+          <div class="col-2">
+            <%= select filter_form, :operator, ["is"], class: "form-control" %>
+            <%= error_tag filter_form, :operator %>
+          </div>
+
+          <div class="col-auto">
+            <%= text_input filter_form, :value, class: "form-control" %>
+            <%= error_tag filter_form, :value %>
+          </div>
+        </div>
+      <% end %>
+
+      <a href="#" phx-click="add-filter" phx-target="{ @myself }" class="btn btn-secondary">Add a filter</a>
+    </fieldset>
+
+    <fieldset class="my-4">
+      <legend>Responder - Response sent back to the webhook sender.</legend>
+      <%= for responder_form <- inputs_for(f, :responder) do %>
+        <%= label responder_form, :status_code, class: "form-label" %>
+        <%= text_input responder_form, :status_code, class: "form-control" %>
+        <%= error_tag responder_form, :status_code %>
+
+        <%= label responder_form, :content_type, class: "form-label" %>
+        <%= text_input responder_form, :content_type, class: "form-control" %>
+        <%= error_tag responder_form, :content_type %>
+
+        <%= label responder_form, :payload, class: "form-label" %>
+        <%= textarea responder_form, :payload, class: "form-control" %>
+        <%= error_tag responder_form, :payload %>
+      <% end %>
+    </fieldset>
+
+    <fieldset class="my-4">
+      <legend>Dispatcher - The target to send payload.</legend>
+      <%= for dispatcher_form <- inputs_for(f, :dispatcher) do %>
+        <%= label dispatcher_form, :url, class: "form-label" %>
+        <%= text_input dispatcher_form, :url, placeholder: "https://example.test", class: "form-control" %>
+        <%= error_tag dispatcher_form, :url %>
+
+        <%= label dispatcher_form, :http_method, class: "form-label" %>
+        <%= text_input dispatcher_form, :http_method, class: "form-control" %>
+        <%= error_tag dispatcher_form, :http_method %>
+
+        <%= label dispatcher_form, :content_type, class: "form-label" %>
+        <%= text_input dispatcher_form, :content_type, class: "form-control" %>
+        <%= error_tag dispatcher_form, :content_type %>
+
+        <%= label dispatcher_form, :payload_template, class: "form-label" %>
+        <%= textarea dispatcher_form, :payload_template, rows: 20, style: "height:100%;", placeholder: "{}", class: "form-control" %>
+        <div class="form-text">You can inject value from the input, with <a href="https://cburgmer.github.io/json-path-comparison/">JSONPath</a> syntax.</div>
+        <%= error_tag dispatcher_form, :payload_template %>
+      <% end %>
+    </fieldset>
+
+    <%= submit "Save", phx_disable_with: "Saving...", class: "btn btn-primary" %>
+  </.form>
+</div>

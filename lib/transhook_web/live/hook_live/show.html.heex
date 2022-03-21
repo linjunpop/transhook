@@ -4,10 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <h4>Webhook URL</h4>
-        <p>
-          <small><%= Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint) %></small>
-        </p>
+        <h4>Source</h4>
       </div>
 
       <div class="col-1">
@@ -15,9 +12,9 @@
       </div>
 
       <div class="col">
-        <h4>Transhook</h4>
+        <h4><b>Transhook</b></h4>
         <p>
-          <small>This application</small>
+          <small><%= Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint) %></small>
         </p>
       </div>
 
@@ -36,21 +33,29 @@
 </div>
 
 <%= if @live_action in [:edit] do %>
-  <%= live_modal TranshookWeb.HookLive.FormComponent,
-    id: @hook.id,
-    title: @page_title,
-    action: @live_action,
-    hook: @hook,
-    return_to: Routes.admin_hook_show_path(@socket, :show, @hook) %>
+  <.modal return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}>
+    <.live_component
+      module={TranshookWeb.HookLive.FormComponent}
+      id={@hook.id},
+      title={@page_title},
+      action={@live_action},
+      hook={@hook},
+      return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}
+    />
+  </.modal>
 <% end %>
 
 <%= if @live_action in [:sample] do %>
-  <%= live_modal TranshookWeb.HookLive.SampleComponent,
-    id: @hook.id,
-    title: @page_title,
-    action: @live_action,
-    hook: @hook,
-    return_to: Routes.admin_hook_show_path(@socket, :show, @hook) %>
+  <.modal return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}>
+    <.live_component
+      module={TranshookWeb.HookLive.SampleComponent}
+      id={@hook.id},
+      title={@page_title},
+      action={@live_action},
+      hook={@hook},
+      return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}
+    />
+  </.modal>
 <% end %>
 
 <section>
@@ -66,10 +71,13 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Filters</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
           <ul class="list-group">
             <%= for filter <- @hook.hook_filters do %>
-              <li class="list-group-item">[<%= filter.query %>] <%= filter.operator %> [<%= filter.value %>]</li>
+              <li class="list-group-item">
+                <b><%= filter.query %></b>
+                <%= filter.operator %>
+                <b><%= filter.value %></b>
+              </li>
             <% end %>
           </ul>
         </div>
@@ -80,8 +88,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Template</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <pre><%= @hook.dispatcher.payload_template %></pre>
+          <pre><%= @hook.dispatcher.payload_template %></pre>
         </div>
       </div>
     </div>
