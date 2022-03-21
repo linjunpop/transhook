@@ -1,6 +1,10 @@
 # Transhook
 
-Webhook -> Webhook
+Connecting Internet services by transforming data between Webhooks.
+
+```
+Service A -> Transhook -> Service B
+```
 
 ![](./assets/static/images/intro.png)
 
