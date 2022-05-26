@@ -4,10 +4,10 @@
   <.modal return_to={Routes.admin_hook_index_path(@socket, :index)}>
     <.live_component
       module={TranshookWeb.HookLive.FormComponent}
-      id={@hook.id || :new},
-      title={@page_title},
-      action={@live_action},
-      hook={@hook},
+      id={@hook.id || :new}
+      title={@page_title}
+      action={@live_action}
+      hook={@hook}
       return_to={Routes.admin_hook_index_path(@socket, :index)}
     />
   </.modal>
