@@ -20,7 +20,10 @@
         <div class="row g-3">
           <div class="col-auto">
             <%= text_input filter_form, :query, class: "form-control" %>
-            <div class="form-text">Syntax: <a href="https://cburgmer.github.io/json-path-comparison/">JSONPath</a></div>
+            <div class="form-text">
+              Syntax: <a href="https://cburgmer.github.io/json-path-comparison/">JSONPath</a>
+              <small>(ex. <code>$.project.name</code>)</small>
+            </div>
             <%= error_tag filter_form, :query %>
           </div>
 

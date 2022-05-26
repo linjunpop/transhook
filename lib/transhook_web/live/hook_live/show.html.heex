@@ -3,18 +3,14 @@
 <div class="bg-light bg-gradient p-2 my-3">
   <div class="container">
     <div class="row">
-      <div class="col">
-        <h4>Source</h4>
-      </div>
-
       <div class="col-1">
         <span>️➡️</span>
       </div>
 
       <div class="col">
-        <h4><b>Transhook</b></h4>
         <p>
-          <small><%= Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint) %></small>
+          <b>Transhook</b>
+          <a href={Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint)}>Webhook</a>
         </p>
       </div>
 
@@ -23,10 +19,7 @@
       </div>
 
       <div class="col">
-        <h4>Target</h4>
-        <p>
-          <small><%= @hook.dispatcher.url %></small>
-        </p>
+        <a href={@hook.dispatcher.url}>Destination</a>
       </div>
     </div>
   </div>
@@ -36,10 +29,10 @@
   <.modal return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}>
     <.live_component
       module={TranshookWeb.HookLive.FormComponent}
-      id={@hook.id},
-      title={@page_title},
-      action={@live_action},
-      hook={@hook},
+      id={@hook.id}
+      title={@page_title}
+      action={@live_action}
+      hook={@hook}
       return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}
     />
   </.modal>
@@ -49,10 +42,10 @@
   <.modal return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}>
     <.live_component
       module={TranshookWeb.HookLive.SampleComponent}
-      id={@hook.id},
-      title={@page_title},
-      action={@live_action},
-      hook={@hook},
+      id={@hook.id}
+      title={@page_title}
+      action={@live_action}
+      hook={@hook}
       return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}
     />
   </.modal>
