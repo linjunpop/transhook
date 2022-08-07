@@ -61,10 +61,9 @@ defmodule Transhook.Transformer.Parser do
     case result do
       {:ok, content_list} when is_list(content_list) ->
         content_list
-        |> Enum.map(fn value ->
+        |> Enum.map_join("\n", fn value ->
           normalize_value(value)
         end)
-        |> Enum.join("\n")
 
       {:ok, other_value} ->
         normalize_value(other_value)
